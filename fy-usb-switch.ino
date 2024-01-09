@@ -1,3 +1,4 @@
+#include "ApiServer.h"
 #include "CapacityHandle.h"
 #include "KeyHandle.h"
 #include "SystemHandle.h"
@@ -12,6 +13,7 @@ CapacityHandle capacityHandle = CapacityHandle();                      // 功率
 WifiHandle wifiHandle = WifiHandle(server);                            // wifi 处理对象
 TimeJobHandle timeJobHandle = TimeJobHandle(timehandle, systemHandle); // 定时开启关闭对象
 KeyHandle keyHandle = KeyHandle(systemHandle, timeJobHandle);          // 按键功能自定义对象
+ApiServer apiServer = ApiServer(server);                               // 提供接口服务
 
 void setup()
 {
@@ -22,8 +24,10 @@ void setup()
     wifiHandle.loop();          // 连接WiFi
     timehandle.begin();         // 初始化时间
     systemHandle.begin();       // 初始化系统设置
+    apiServer.begin();          // 接口服务初始化
     timeJobHandle.begin();      // 定时开关初始化
     capacityHandle.begin();     // 功率信息初始化
+    
 }
 
 void loop()
@@ -32,4 +36,5 @@ void loop()
     systemHandle.loop();
     timeJobHandle.loop();
     keyHandle.loop();
+    apiServer.loop();
 }

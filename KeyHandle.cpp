@@ -10,6 +10,8 @@ void KeyHandle::loadConfig()
     {
         config.double_click_mode = 0;
         config.click_mode = 0;
+        config.click_data = 0;
+        config.double_click_data = 0;
     }
 }
 

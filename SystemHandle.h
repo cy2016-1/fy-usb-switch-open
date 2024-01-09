@@ -23,12 +23,12 @@ struct sys_config
 class SystemHandle
 {
 private:
-    static SystemHandle *_singleton; // 单例对象
-    sys_config config;               // 系统参数配置
-    long lastTime = 0;               // 刷新配置
-    void loadConfig();               // 读取eeprom配置
+    sys_config config; // 系统参数配置
+    long lastTime = 0; // 刷新配置
+    void loadConfig(); // 读取eeprom配置
 
 public:
+    static SystemHandle *_singleton; // 单例对象
     SystemHandle()
     {
         _singleton = this;

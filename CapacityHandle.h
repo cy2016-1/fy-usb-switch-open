@@ -18,11 +18,11 @@ struct capacity_config
 class CapacityHandle
 {
 private:
-    static CapacityHandle *_singleton;    // 单例对象
     capacity_config config;               // 配置
     INA226 ina = INA226(INA226_I2C_ADDR); // INA对象
 
 public:
+    static CapacityHandle *_singleton; // 单例对象
     CapacityHandle()
     {
         _singleton = this;

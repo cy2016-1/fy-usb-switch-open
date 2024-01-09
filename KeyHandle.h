@@ -28,7 +28,6 @@ struct key_config
 class KeyHandle
 {
 private:
-    static KeyHandle *_singleton;                        // 单例对象
     key_config config;                                   // 系统参数配置
     void loadConfig();                                   // 读取eeprom配置
     OneButton btn1 = OneButton(SWITCH_BTN, true, false); // 获取扭对象
@@ -41,6 +40,7 @@ private:
     static void longClickCallback();                     // 长按按键事件
 
 public:
+    static KeyHandle *_singleton; // 单例对象
     KeyHandle(SystemHandle &systemHandle, TimeJobHandle &timeJobHandle)
     {
         _singleton = this;

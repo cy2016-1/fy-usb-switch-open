@@ -30,14 +30,14 @@ struct job_config
 class TimeJobHandle
 {
 private:
-    static TimeJobHandle *_singleton; // 单例对象
-    job_config config;                // 系统参数配置
-    void loadConfig();                // 读取eeprom配置
-    long lastTime;                    // 最后更新时间
-    TimeHandle *_timeHandle;          // 时间对象
-    SystemHandle *_systemHandle;      // 开关设置
+    job_config config;           // 系统参数配置
+    void loadConfig();           // 读取eeprom配置
+    long lastTime;               // 最后更新时间
+    TimeHandle *_timeHandle;     // 时间对象
+    SystemHandle *_systemHandle; // 开关设置
 
 public:
+    static TimeJobHandle *_singleton; // 单例对象
     TimeJobHandle(TimeHandle &timeHandle, SystemHandle &systemHandle)
     {
         _timeHandle = &timeHandle;

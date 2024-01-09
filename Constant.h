@@ -17,15 +17,10 @@
 #define HTTP_OK "OK"
 #define HTTP_FAIL "FAIL"
 #define HTTP_FULL "FULL"
-#define API_INDEX "/"
-#define API_WRITE "/fyusb/write"
-#define API_READ "/fyusb/read"
 
 #define PARAM_P "p"
 #define PARAM_M "m"
 #define PARAM_D "d"
-#define PARAM_LD "ld"
-
 
 #define JOSN_SIZE_64 64
 #define JOSN_SIZE_128 128

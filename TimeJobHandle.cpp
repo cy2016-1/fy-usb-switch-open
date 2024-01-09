@@ -10,6 +10,11 @@ void TimeJobHandle::loadConfig()
     {
         config.enable_open = FY_FALSE;
         config.enable_close = FY_FALSE;
+        config.open_hour = 0;
+        config.open_minute = 0;
+        config.close_hour = 0;
+        config.close_minute = 0;
+        config.downTime = 0;
     }
 }
 
