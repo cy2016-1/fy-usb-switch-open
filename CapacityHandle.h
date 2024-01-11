@@ -20,6 +20,7 @@ class CapacityHandle
 private:
     capacity_config config;               // 配置
     INA226 ina = INA226(INA226_I2C_ADDR); // INA对象
+    long lastTime = 0;
 
 public:
     static CapacityHandle *_singleton; // 单例对象
@@ -27,6 +28,10 @@ public:
     {
         _singleton = this;
     }
+
+    float v;
+    float a;
+    float p;
 
     void begin();
 

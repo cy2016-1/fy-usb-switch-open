@@ -5,11 +5,11 @@ ApiServer *ApiServer::_singleton;
 
 void ApiServer::begin()
 {
-    LLMNR.begin("fyusb.com");                                   // llmnr
+    LLMNR.begin("fyusb");                                       // llmnr
     _singleton->_server->on(API_INDEX, HTTP_GET, serverIndex);  // 设置主页
     _singleton->_server->on(API_WRITE, HTTP_GET, writeHandler); // 写数据接口
     _singleton->_server->on(API_READ, HTTP_GET, readHandler);   // 读数据接口
-    _singleton->_server->onNotFound(serverIndex);               // 设置404
+    _singleton->_server->onNotFound(serverNotfound);               // 设置404
     _singleton->_server->begin();                               // 服务启动
 }
 
@@ -18,9 +18,15 @@ void ApiServer::loop()
     _singleton->_server->handleClient();
 }
 
+
 void ApiServer::serverIndex()
 {
     _singleton->_server->send(API_OK, API_SERVER_HTML_TEXT, web_index_html);
+}
+
+void ApiServer::serverNotfound()
+{
+    _singleton->_server->send(API_OK, API_SERVER_HTML_TEXT, "404");
 }
 
 void ApiServer::writeHandler()
@@ -43,7 +49,6 @@ void ApiServer::writeHandler()
     default:
         break;
     }
-    _singleton->_server->sendHeader("Access-Control-Allow-Origin", "*", true);
     _singleton->_server->send(API_OK, API_SERVER_HTML_TEXT, HTTP_OK);
 }
 
@@ -66,7 +71,6 @@ void ApiServer::readHandler()
         data = KeyHandle::_singleton->readHandler(_singleton->_server);
         break;
     }
-    _singleton->_server->sendHeader("Access-Control-Allow-Origin", "*", true);
     _singleton->_server->send(API_OK, API_SERVER_HTML_TEXT, data);
     free(data);
 }

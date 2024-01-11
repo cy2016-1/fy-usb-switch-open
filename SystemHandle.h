@@ -9,6 +9,7 @@
 #define VERSION "v0.0.1"
 #define PARAM_ENABLE "enable"
 #define PARAM_ENABLE_LED "enableLed"
+#define PARAM_AUTH "auth"
 #define PARAM_VERSION "version"
 #define SWITCH_PIN 14
 #define G_LED_PIN 12
@@ -34,6 +35,8 @@ public:
         _singleton = this;
     }
 
+    char *auth;
+
     void begin();
 
     void loop();
@@ -41,6 +44,8 @@ public:
     void sysHandle();
 
     void setSwitchValue(int data);
+
+    void setLedValue(int data);
 
     static void writeHandler(ESP8266WebServer *_server);
 

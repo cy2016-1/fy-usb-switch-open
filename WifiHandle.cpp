@@ -20,21 +20,14 @@ void WifiHandle::loop()
 
 void WifiHandle::saveConfig()
 {
-    Serial.println("wifi配置信息");
-    Serial.println(config.connect_wifi);
-    Serial.println(config.remember);
-    EepromUtil::saveData(REMEMBER_WIFI, (uint8_t *)&config, 2);
+    EepromUtil::saveData(REMEMBER_WIFI, (uint8_t *)&config, sizeof(wifi_config));
 }
 
 void WifiHandle::readConfig()
 {
-    EepromUtil::loadData(REMEMBER_WIFI, (uint8_t *)&config, 2);
-    Serial.println("wifi配置信息");
-    Serial.println(config.connect_wifi);
-    Serial.println(config.remember);
-    if (config.connect_wifi == FY_ZERO && config.remember == FY_ZERO)
+    EepromUtil::loadData(REMEMBER_WIFI, (uint8_t *)&config, sizeof(wifi_config));
+    if (config.remember == FY_ZERO || config.remember == FY_0XFF)
     {
-        Serial.println("没有获取到配置信息");
         config.connect_wifi = FY_FALSE;
         config.remember = FY_FALSE;
     }
@@ -45,12 +38,11 @@ void WifiHandle::initWebServer()
     WiFi.mode(WIFI_AP_STA);                                             // 设置模式为wifi热点模式
     WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));         // 初始化AP模式
     WiFi.softAP(AP_NAME, NULL, 1, 0, 4);                                // 初始化AP模式
-    _singleton->_server->on("/", HTTP_GET, handleIndex);                // 设置主页回调函数
-    _singleton->_server->on("/configwifi", HTTP_GET, handleConfigWifi); // 设置Post请求回调函数
-    _singleton->_server->on("/wifilist", HTTP_GET, handleWifiList);     // 设置获取wifi列表回调函数
+    _singleton->_server->on(WIFI_INDEX_URL, HTTP_GET, handleIndex);     // 设置主页回调函数
+    _singleton->_server->on(WIFI_LIST_URL, HTTP_GET, handleConfigWifi); // 设置Post请求回调函数
+    _singleton->_server->on(WIFI_CONFIG_URL, HTTP_GET, handleWifiList); // 设置获取wifi列表回调函数
     _singleton->_server->onNotFound(handleIndex);                       // 设置无法响应的http请求的回调函数
     _singleton->_server->begin();                                       // 启动WebServer
-    Serial.println("WebServer started!");                               // 打印日志
     dnsServer.start(53, "*", apIP);                                     // DNS服务器发现
 }
 

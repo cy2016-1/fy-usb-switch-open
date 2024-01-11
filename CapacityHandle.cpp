@@ -10,7 +10,14 @@ void CapacityHandle::begin()
 
 void CapacityHandle::loop()
 {
-    _singleton = this;
+    if (millis() - lastTime >= 1000)
+    {
+        lastTime = millis();
+        v = ina.getBusVoltage();             // VBUS电压V
+        float mV = ina.getShuntVoltage_mV(); // 采样电阻分压
+        a = mV / 10;                         // 采样电阻分压/采样电阻值 = 电流
+        p = ina.getPower();                  // 分压电压
+    }
 }
 
 char *CapacityHandle::readHandler(ESP8266WebServer *_server)
@@ -19,14 +26,10 @@ char *CapacityHandle::readHandler(ESP8266WebServer *_server)
     char *stateStr = new char[JOSN_SIZE_2048];
     if (mode == 0)
     {
-        float V = _singleton->ina.getBusVoltage();       // VBUS电压V
-        float mV = _singleton->ina.getShuntVoltage_mV(); // 采样电阻分压
-        float power = _singleton->ina.getPower();        // 分压电压
-        float A = mV / 10;                               // 采样电阻分压/采样电阻值 = 电流
         StaticJsonDocument<JOSN_SIZE_64> jsonBuffer;
-        jsonBuffer["v"] = V;
-        jsonBuffer["a"] = A;
-        jsonBuffer["p"] = power;
+        jsonBuffer["v"] = _singleton->v;
+        jsonBuffer["a"] = _singleton->a;
+        jsonBuffer["p"] = _singleton->p;
         serializeJson(jsonBuffer, stateStr, JOSN_SIZE_64);
         jsonBuffer.clear();
     }

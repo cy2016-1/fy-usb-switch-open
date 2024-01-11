@@ -14,8 +14,11 @@
 #endif
 #define WIFI_LED_PIN 2
 
-#define WIFI_CONN_FAIL_TIP "wifi连接失败,请检查密码后重试。"
-#define WIFI_CONN_SUCC_TIP "wifi连接成功,即将重启设备。"
+#define WIFI_CONN_FAIL_TIP "fail"
+#define WIFI_CONN_SUCC_TIP "success"
+#define WIFI_LIST_URL "/configwifi"
+#define WIFI_CONFIG_URL "/wifilist"
+#define WIFI_INDEX_URL "/"
 
 struct wifi_config
 {
