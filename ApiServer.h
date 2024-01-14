@@ -10,6 +10,7 @@
 #define API_INDEX "/"
 #define API_WRITE "/usb/write"
 #define API_READ "/usb/read"
+#define API_FIND "/f"
 
 class ApiServer
 {
@@ -21,6 +22,7 @@ private:
     static void writeHandler();   // 写数据操作主方法
     static void readHandler();    // 读数据操作主方法
     static void serverNotfound(); // 404
+    static void findHandler();    // 用于发现设备
 
 public:
     ApiServer()

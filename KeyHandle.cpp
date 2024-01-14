@@ -71,7 +71,7 @@ void KeyHandle::keyHandle(uint8_t mode, uint32_t data)
         _timeJobHandle->setDownTime(data);
         return;
     case 2:
-        Serial.println("not do any thing");
+        _systemHandle->setLedValue(99);
         return;
     default:
         return;
