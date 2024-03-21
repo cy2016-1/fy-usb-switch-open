@@ -14,6 +14,7 @@ void WifiHandle::loop()
         {
             digitalWrite(WIFI_LED_PIN, !digitalRead(WIFI_LED_PIN)); // LED 闪烁
             lastTime = millis();
+            _loop();
         }
     }
 }
@@ -46,6 +47,27 @@ void WifiHandle::initWebServer()
     dnsServer.start(53, "*", apIP);                                     // DNS服务器发现
 }
 
+void WifiHandle::setLoopCallback(void (*loopCallback)())
+{
+    _loop = loopCallback;
+}
+
+void WifiHandle::noWifiLoop()
+{
+    int t = millis();
+    while (1)
+    {
+        if (millis() - t >= 100)
+        {
+            break;
+        }
+        if (_loop != NULL)
+        {
+            _loop();
+        }
+    }
+}
+
 void WifiHandle::begin()
 {
     readConfig();                                                     // 先读取wifi配置信息
@@ -58,8 +80,8 @@ void WifiHandle::begin()
         while (WiFi.status() != WL_CONNECTED)
         {
             timer++;
-            delay(100);       //
-            if (timer >= 300) // 如果计数器大于60次,表示超过一分钟,则说明一分钟都没有连接上wifi,就不连了
+            _singleton->noWifiLoop();
+            if (timer >= 30) // 如果计数器大于60次,表示超过一分钟,则说明一分钟都没有连接上wifi,就不连了
             {
                 timer = 0;                                  // 清零计数器
                 _singleton->config.connect_wifi = FY_FALSE; // 重启设备之前将设备模式修改为热点模式
@@ -124,9 +146,9 @@ void WifiHandle::handleConfigWifi()
     int count = 0;
     while (WiFi.status() != WL_CONNECTED)
     {
-        delay(500);
+        _singleton->noWifiLoop();
         count++;
-        if (count > 40) // 如果20秒内没有连上，就开启Web配网 可适当调整这个时间
+        if (count > 6) // 如果20秒内没有连上，就开启Web配网 可适当调整这个时间
         {
             _singleton->_server->send(200, API_SERVER_HTML_TEXT, WIFI_CONN_FAIL_TIP); // 返回保存成功页面
             break;                                                                    // 跳出 防止无限初始化

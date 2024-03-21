@@ -44,7 +44,8 @@ private:
     static void handleConfigWifi(); // 配网成功操作
     void saveConfig();              // 记录wifi配网信息
     void readConfig();              // 判断是否已经记住过wifi密码
-
+    void noWifiLoop();              // 没有WiFi的时候的循环
+    void (*_loop)();                // 配置网络时的循环
 public:
     WifiHandle()
     {
@@ -62,6 +63,8 @@ public:
     }
 
     void begin();
+
+    void setLoopCallback(void (*loopCallback)());
 
     void loop();
 };

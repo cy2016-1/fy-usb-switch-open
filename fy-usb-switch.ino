@@ -6,10 +6,6 @@
 #include "TimeJobHandle.h"
 #include "WifiHandle.h"
 
-#define BLINKER_WIFI
-#define BLINKER_MIOT_LIGHT
-#include <Blinker.h>
-
 ESP8266WebServer server(80);                                           // 创建dnsServer实例
 TimeHandle timehandle = TimeHandle();                                  // 时间处理对象
 SystemHandle systemHandle = SystemHandle();                            // 系统设置对象
@@ -18,6 +14,8 @@ WifiHandle wifiHandle = WifiHandle(server);                            // wifi �
 TimeJobHandle timeJobHandle = TimeJobHandle(timehandle, systemHandle); // 定时开启关闭对象
 KeyHandle keyHandle = KeyHandle(systemHandle, timeJobHandle);          // 按键功能自定义对象
 ApiServer apiServer = ApiServer(server);                               // 提供接口服务
+
+#include <Blinker.h>
 
 /**************** 点灯功能 *******************/
 BlinkerButton powerBtn("btn-enable"); // 开关按键
@@ -115,17 +113,24 @@ void initBlinker()
     BlinkerMIOT.attachQuery(miotQuery);       // 注册小爱同学语音状态查询
 }
 
+void powerLoop()
+{
+    systemHandle.loop();
+    keyHandle.loop();
+}
+
 void setup()
 {
-    Serial.begin(115200);   // 初始化串口
-    keyHandle.begin();      // 按键初始化
-    wifiHandle.begin();     // wifi连接
-    wifiHandle.loop();      // 连接WiFi
-    timehandle.begin();     // 初始化时间
-    systemHandle.begin();   // 初始化系统设置
-    apiServer.begin();      // 接口服务初始化
-    timeJobHandle.begin();  // 定时开关初始化
-    capacityHandle.begin(); // 功率信息初始化
+    Serial.begin(115200);                  // 初始化串口
+    keyHandle.begin();                     // 按键初始化
+    systemHandle.begin();                  // 初始化系统设置
+    wifiHandle.setLoopCallback(powerLoop); // 没有WiFi的时候执行的方法付
+    wifiHandle.begin();                    // wifi连接
+    wifiHandle.loop();                     // 连接WiFi
+    timehandle.begin();                    // 初始化时间
+    apiServer.begin();                     // 接口服务初始化
+    timeJobHandle.begin();                 // 定时开关初始化
+    capacityHandle.begin();                // 功率信息初始化
     if (strlen(systemHandle.auth) > 0)
     {
         initBlinker(); // 初始化点灯代码
