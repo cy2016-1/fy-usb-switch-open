@@ -54,13 +54,9 @@ void WifiHandle::setLoopCallback(void (*loopCallback)())
 
 void WifiHandle::noWifiLoop()
 {
-    int t = millis();
-    while (1)
+    long t = millis();
+    while (millis() - t < 100)
     {
-        if (millis() - t >= 100)
-        {
-            break;
-        }
         if (_loop != NULL)
         {
             _loop();
@@ -80,8 +76,8 @@ void WifiHandle::begin()
         while (WiFi.status() != WL_CONNECTED)
         {
             timer++;
-            _singleton->noWifiLoop();
-            if (timer >= 30) // 如果计数器大于60次,表示超过一分钟,则说明一分钟都没有连接上wifi,就不连了
+            delay(100);
+            if (timer >= 300) // 如果计数器大于60次,表示超过一分钟,则说明一分钟都没有连接上wifi,就不连了
             {
                 timer = 0;                                  // 清零计数器
                 _singleton->config.connect_wifi = FY_FALSE; // 重启设备之前将设备模式修改为热点模式
@@ -148,7 +144,7 @@ void WifiHandle::handleConfigWifi()
     {
         _singleton->noWifiLoop();
         count++;
-        if (count > 6) // 如果20秒内没有连上，就开启Web配网 可适当调整这个时间
+        if (count > 200) // 如果20秒内没有连上，就开启Web配网 可适当调整这个时间
         {
             _singleton->_server->send(200, API_SERVER_HTML_TEXT, WIFI_CONN_FAIL_TIP); // 返回保存成功页面
             break;                                                                    // 跳出 防止无限初始化

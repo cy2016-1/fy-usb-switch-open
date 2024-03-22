@@ -5,7 +5,6 @@ ApiServer *ApiServer::_singleton;
 
 void ApiServer::begin()
 {
-    LLMNR.begin("fyusb");                                       // llmnr
     _singleton->_server->on(API_INDEX, HTTP_GET, serverIndex);  // 设置主页
     _singleton->_server->on(API_WRITE, HTTP_GET, writeHandler); // 写数据接口
     _singleton->_server->on(API_READ, HTTP_GET, readHandler);   // 读数据接口

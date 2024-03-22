@@ -15,6 +15,8 @@ TimeJobHandle timeJobHandle = TimeJobHandle(timehandle, systemHandle); // 定时
 KeyHandle keyHandle = KeyHandle(systemHandle, timeJobHandle);          // 按键功能自定义对象
 ApiServer apiServer = ApiServer(server);                               // 提供接口服务
 
+#define BLINKER_WIFI
+#define BLINKER_MIOT_LIGHT
 #include <Blinker.h>
 
 /**************** 点灯功能 *******************/
