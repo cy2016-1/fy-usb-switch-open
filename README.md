@@ -1,5 +1,9 @@
 # 飞鱼USB开关说明
 
+![展示图](./img/0.jpg)
+![展示图](./img/1.jpg)
+
+
 ## 简介
 
 随着各种各样的USB供电设备的出现，生活中经常会出现一种场景，那就是操作繁琐，每次都要插拔电源等等！
@@ -34,9 +38,15 @@
 
 板子使用立创EDA画的，所以需要知道原理图和PCB的小伙伴可以点击以下链接跳转到立创开源地址哦
 
-## 代码烧录
+## 固件烧录
+> 如果你不想下载代码烧录的话，可以选择直接烧录固件，这样简单便捷，需要焊接好板子即可。
+todo
+
+
+## 代码编译烧录
 
 > 熟悉arduino的小伙伴就不需要看这里的说明，如果是对arduino代码编译这些还不太熟悉的小伙伴则可以往下看，我这里也是从之前其他地方拷贝过来的，描述的不对，还请多百度一下才行。
+
 
 ### 1. 软件和驱动安装
    这里由于我之前在点阵时钟的描述中介绍的比较清晰，所以这里不一一介绍了，请点击链接【 [Arduino软件安装及串口驱动安装说明](https://gitee.com/lengff/esp8266-lattice-clock-open#2--%E5%AE%89%E8%A3%85%E5%AF%B9%E5%BA%94%E7%9A%84%E8%BD%AF%E4%BB%B6) 】跳转到页面进行查看
@@ -57,8 +67,8 @@
 
 #### 2. 下载源代码
 
-- `github下载` https://github.com/Lengff/esp8266-lattice-clock-open
-- `gitee下载` https://gitee.com/lengff/esp8266-lattice-clock-open
+- `github下载` 暂未上传到github
+- `gitee下载` https://gitee.com/fly-fish-studio/fy-usb-switch-open
 
 通过上面的地址下载我们的源码，其中代码在目录的`code`目录中，通过`arduino`直接打开`code`目录的文件夹即可。
 
@@ -86,42 +96,58 @@
 3. 如果没有弹出来的话，那就自己到手机浏览器输入：`192.168.4.1`一样也会有配网页面
 4. 按照页面提示即可完成配网
 
+![配网页面](./img/peiwang.jpg)
+
 ### 2. 打开设备操作页面
+
+![设备操作页面](./img/zhuye.jpg)
 
 设备操作页面如上图，该页面的IP地址由于不方便获取，以下提供几种方法：
 
 1. 路由器管理页面查看设备IP地址（大佬都会懂这个的）
 2. 使用串口工具，查看串口打印的IP地址（这个比上面的麻烦一些）
-3. 使用我提供的一个工具，点击该链接地址：，然后输入路由器IP地址，搜寻到设备会自动跳转
+3. 使用我提供的一个工具，点击该链接地址：[fy-switch-getip](http://lengff.com/lengff/fy-switch-getip.html) ，然后输入路由器IP地址，搜寻到设备会自动跳转
 
-
+![发现IP地址页面](./img/faxianshebei.jpg)
 
 ### 3. 点灯功能配置
 
 熟悉使用点灯的小伙半应该不用看这里的教程了吧，嘻嘻嘻。如果你不熟悉使用点灯可以接着往下看。
 
-
 ##### 1. 获取点灯的secretKey
 
 获取流程请看截图展示，这里偷懒没有最近去截图，用的是以前的图片，如果有出入请以实际的为准。
 
+1. 进入首页点击右上角的＋ 
+![进入首页点击右上角的＋](./img/dd01.png)
+2. 点击点灯分类中的“独立设备”
+![点击点灯分类中的“独立设备”](./img/dd02.png)
+3. 设备接入向导点击网络设备
+![设备接入向导点击网络设备](./img/dd03.png)
+4. 复制其中的key就是我们需要的点灯secretKey
+![复制其中的key就是我们需要的点灯secretKey](./img/dd04.png)
+
+
 ##### 2. 配置点灯的secretKey
 
-直接在操作页面的`点灯key`那里粘贴上一步获取到的点灯`secretKey`，然后保存后点重启设备即可
+直接在操作页面的`绑定点灯SecretKey`那里粘贴上一步获取到的点灯`secretKey`，然后保存后点重启设备即可
 
 ##### 3. 导入点灯的操作界面
 
 这一步也是比较简单的，需要复制界面代码，然后粘贴即可。
 
 界面代码：
-```
-asdfasdfasdfasdfasdfasdf
+``` 
+{¨version¨¨2.0.0¨¨config¨{¨headerColor¨¨transparent¨¨headerStyle¨¨dark¨¨background¨{¨img¨¨assets/img/bg/1.jpg¨}}¨dashboard¨|{¨type¨¨btn¨¨ico¨¨fad fa-power-off¨¨mode¨Ê¨t0¨¨开关USB¨¨t1¨¨文本2¨¨bg¨É¨cols¨Í¨rows¨Í¨key¨¨btn-enable¨´x´É´y´Ë¨lstyle¨Ë}{ßB¨cha¨ßKÉ¨sty¨¨line¨¨clr¨¨#00A90C¨¨sty1¨ßS¨clr1¨¨#076EEF¨¨sty2¨ßS¨clr2¨¨#EA0909¨ßLÑßMÍßN¨cha-hgb¨´x´É´y´ÏßPÊßG¨电压¨ßI¨电流¨¨t2¨¨功率¨¨key1¨¨chat-a¨¨key0¨¨chat-v¨¨key2¨¨chat-p¨}{ßBßCßD¨fal fa-power-off¨ßFÊßG¨启用指示灯¨ßIßJßKÉßLÍßMÍßN¨btn-led¨´x´Í´y´ËßPË}÷¨actions¨|÷¨triggers¨|÷¨rt¨|÷}
 ```
 
 操作步骤如下图所示：
-
-
-
+1. 点击右上角的三个点
+![点击右上角的三个点](./img/dd05.png)
+2. 点击界面配置
+![点击界面配置](./img/dd06.png)
+3. 清空原来的内容，粘贴上述代码
+![清空原来的内容，粘贴上述代码](./img/dd07.png)
 
 
 ### 4. 小爱语音配置
