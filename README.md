@@ -16,6 +16,20 @@
 
 所以才下定决定做一个这个USB开关，这个设备的功能也比较简单，算不上什么高级的东西，但是我也是没有看到有比较好用的开源作品，所以就自己做一个，做的不好让大家见笑。
 
+## 推广自己
+
+> 有你们的支持才是我们所有开源作者的动力，所以如果你有时间且愿意动动手指欢迎点点关注点点赞，让我们不断推陈出新，感激不尽
+
+#### gitee项目地址:
+
+介于github访问实在是太难了，所以首推gitee。
+
+[gitee项目地址 fy-usb-switch-open](https://gitee.com/fly-fish-studio/fy-usb-switch-open)
+
+#### 嘉立创项目地址：
+
+[嘉立创项目地址 fy-usb-switch-open](https://oshwhub.com/fly-fish-studio/usb-kai-guan-jian-ce-dian-ya-dian-liu-esp8266-ina226)
+
 ## 功能
 
 1. 电源开和关
@@ -37,6 +51,19 @@
 ## 原理图
 
 板子使用立创EDA画的，所以需要知道原理图和PCB的小伙伴可以点击以下链接跳转到立创开源地址哦
+
+#### 嘉立创PCB开源地址
+
+[嘉立创PCB开源地址](https://oshwhub.com/fly-fish-studio/usb-kai-guan-jian-ce-dian-ya-dian-liu-esp8266-ina226)
+
+#### 原理图
+
+![原理图](./img/yuanlitu.png)
+
+#### PCB预览
+
+![PCB3D预览图](./img/pcb-3d.png)
+
 
 ## 固件烧录
 > 如果你不想下载代码烧录的话，可以选择直接烧录固件，这样简单便捷，需要焊接好板子即可。
