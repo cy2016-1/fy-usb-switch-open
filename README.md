@@ -22,9 +22,7 @@
 
 #### gitee项目地址:
 
-介于github访问实在是太难了，所以首推gitee。
-
-[gitee项目地址 fy-usb-switch-open](https://gitee.com/fly-fish-studio/fy-usb-switch-open)
+介于github访问实在是太难了，所以首推gitee [gitee项目地址 fy-usb-switch-open](https://gitee.com/fly-fish-studio/fy-usb-switch-open)
 
 #### 嘉立创项目地址：
 
